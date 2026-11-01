@@ -183,7 +183,7 @@ async def main():
     init_db()
     print("бот запущен, подождите пока он домурлычет...")
     await dp.start_polling(bot)
-    import threading
+import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 # --- Мини-сайт для Render ---
@@ -204,4 +204,3 @@ if __name__ == "__main__":
     threading.Thread(target=run_web_server, daemon=True).start()
     # Запускаем самого бота
     asyncio.run(main())
-    
