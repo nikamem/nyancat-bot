@@ -183,6 +183,25 @@ async def main():
     init_db()
     print("бот запущен, подождите пока он домурлычет...")
     await dp.start_polling(bot)
+    import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+# --- Мини-сайт для Render ---
+class WebServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(b"Bot is alive!")
+
+def run_web_server():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(('0.0.0.0', port), WebServer)
+    server.serve_forever()
 
 if __name__ == "__main__":
+    # Запускаем сайт в фоне, чтобы Render не ругался
+    threading.Thread(target=run_web_server, daemon=True).start()
+    # Запускаем самого бота
     asyncio.run(main())
+    
